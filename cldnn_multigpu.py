@@ -27,6 +27,8 @@
 
 """
 Run code for CLDNN Sub-Sampling, PCA and SNR Training experiments by uncommenting the appropriate code blocks
+For all the experiments, the value on line 224 (11200 for no modifications) must be changed according to the dimensions specified-
+128 (1) -> 11200; 64 (1/2) -> 6080; 32 (1/4) -> 3520; 16 (1/8) -> 2240; 8 (1/16) -> 1600; 4 (1/32) -> 1280
 For PCA experiments: Uncomment 'PCA Setup' and 'PCA' code blocks
 For Sub-Sampling experiments: Uncomment 'Sub-Sampling Setup' and 1 of the 3 subsampling code blocks
 For Individual SNR Training experiments: Uncomment 'SNR Setup' and 'SNR Training' code blocks
@@ -218,7 +220,8 @@ model.add(Dropout(dr))
 model.add(ZeroPadding2D((0, 2), data_format="channels_first"))
 
 model.add(Flatten())
-model.add(Reshape((1,2240)))
+# 128 (1) -> 11200; 64 (1/2) -> 6080; 32 (1/4) -> 3520; 16 (1/8) -> 2240; 8 (1/16) -> 1600; 4 (1/32) -> 1280
+model.add(Reshape((1,11200)))
 model.add(keras.layers.LSTM(50))
 model.add(Dense(256, activation='relu', init='he_normal', name="dense1"))
 model.add(Dropout(dr))
